@@ -1,0 +1,41 @@
+syntax = "proto3";
+option go_package = "/proto";
+
+service Simple {
+  rpc Fun(Request)returns(Response){}
+}
+message Request {
+  string name = 1;
+}
+message Response {
+  string Text = 1;
+}
+
+message FileResponse{
+  string file_name = 1;
+  bytes content = 2;
+}
+//流式关键字stream
+service ServiceStream{
+  rpc Fun(Request)returns(stream Response){}
+  rpc DownLoadFile(Request)returns(stream FileResponse){}
+}
+
+message FileRequest{
+  string file_name = 1;
+  bytes content = 2;
+}
+//上传文件
+
+service ClientStream{
+  rpc UploadFile(stream FileRequest)returns(Response){}
+}
+
+//双向流
+service BothStream{
+  rpc Chat(stream Request)returns(stream Response){}
+}
+
+
+
+// protoc -I . --go_out=plugins=grpc:./stream_proto .\stream_proto\stream.proto

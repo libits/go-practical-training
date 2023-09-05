@@ -1,0 +1,19 @@
+syntax = "proto3"; // 指定proto版本
+// 指定golang包名
+option go_package = "/duo_proto";
+
+service VideoService {
+  rpc Look(Request)returns(Response){}
+}
+
+message Request{
+  string name = 1;
+}
+message Response{
+  string name = 1;
+}
+
+//订单服务
+service OrderService {
+  rpc Buy(Request)returns(Response){}
+}
